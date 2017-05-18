@@ -20,8 +20,6 @@
 
 	<script type="text/javascript">
 
-		var socialFeedDomain = "http://172.104.143.102:6969";
-
 		var cardTemplate = "<div class='ui card' data-time='{{time}}'> "+
 			"{{#if image }}"+
 			"<div class='image'>"+
@@ -100,7 +98,7 @@
 
 		$(document).ready(function() {
 
-			$.getJSON(socialFeedDomain+"/posts", function(posts) {
+			$.getJSON("posts.json", function(posts) {
 
 				posts.forEach(function(item) {
 
@@ -123,38 +121,8 @@
 
 			});
 
-			setInterval(updateInstagram, 5*1000);
-
 
 		});
-
-		function updateInstagram() {
-
-			$.getJSON(socialFeedDomain+"/posts/"+$("#card-container .card:first-of-type").data('time'), function(posts) {
-
-				if(posts.length>0) {
-
-					var elements = [];
-
-					posts.forEach(function(post) {
-
-						var elem = $(cardTemplate(post)).get(0);
-
-						elements.push(elem);
-
-					});
-
-					$("#card-container").prepend(elements);
-
-					$("#card-container").imagesLoaded(function() {
-						$("#card-container").isotope("prepended",elements);
-					});
-
-				}
-
-			});
-
-		}
 
 	</script>
 
